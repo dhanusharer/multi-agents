@@ -1,0 +1,238 @@
+{
+  "version": "2025-06-28",
+  "source": "Ministry of Agriculture & Farmers Welfare, India",
+  "schemes": [
+    {
+      "id": "PM-KISAN",
+      "name": "Pradhan Mantri Kisan Samman Nidhi",
+      "name_hi": "प्रधानमंत्री किसान सम्मान निधि",
+      "name_kn": "ಪ್ರಧಾನ ಮಂತ್ರಿ ಕಿಸಾನ್ ಸಮ್ಮಾನ್ ನಿಧಿ",
+      "name_te": "ప్రధాన మంత్రి కిసాన్ సమ్మాన్ నిధి",
+      "name_mr": "प्रधानमंत्री किसान सन्मान निधी",
+      "description": "Direct income support of ₹6,000 per year in three equal installments of ₹2,000 to all landholding farmer families.",
+      "annual_benefit_rupees": 6000,
+      "eligibility_rules": {
+        "max_land_holding_ha": 2.0,
+        "excluded_if": ["income_tax_payer", "govt_employee", "professional_degree_holder"],
+        "min_age": 18,
+        "max_age": null,
+        "states": "all"
+      },
+      "enrollment_url": "https://pmkisan.gov.in",
+      "enrollment_steps": [
+        "Go to the official website: pmkisan.gov.in",
+        "Click on the 'New Farmer Registration' tab",
+        "Select Rural or Urban Farmer Registration and enter your Aadhaar Number and mobile number",
+        "Select your state, district, sub-district, block, and village",
+        "Fill in personal details, bank details, and land parcel details (survey/survey number, area)",
+        "Upload the required documents (Aadhaar Card, Land Deed/Patta)",
+        "Submit the application and note down the registration number for tracking status"
+      ],
+      "documents_required": [
+        "Aadhaar Card",
+        "Land Record Ownership Documents (Khatauni/Jamabandi/7/12 ROR)",
+        "Bank Passbook (with IFSC Code)",
+        "Mobile Number linked with Aadhaar"
+      ],
+      "deadline": null
+    },
+    {
+      "id": "PMFBY",
+      "name": "Pradhan Mantri Fasal Bima Yojana",
+      "name_hi": "प्रधानमंत्री फसल बीमा योजना",
+      "name_kn": "ಪ್ರಧಾನ ಮಂತ್ರಿ ಫಸಲ್ ಬಿಮಾ ಯೋಜನೆ",
+      "name_te": "ప్రధాన మంత్రి ఫసల్ బీమా యోజన",
+      "name_mr": "प्रधानमंत्री पीक विमा योजना",
+      "description": "Subsidized crop insurance covering yield loss due to natural calamities, pests, and diseases.",
+      "annual_benefit_rupees": 0,
+      "eligibility_rules": {
+        "max_land_holding_ha": null,
+        "excluded_if": [],
+        "min_age": 18,
+        "max_age": null,
+        "states": "all"
+      },
+      "enrollment_url": "https://pmfby.gov.in",
+      "enrollment_steps": [
+        "Visit the PMFBY portal: pmfby.gov.in or contact your nearest bank/Common Service Center (CSC)",
+        "Click on 'Farmer Corner' and login with your mobile number",
+        "Fill in the crop details, land location, state, district, and bank account information",
+        "Upload Land Registry document, Tenant agreement (if applicable), and Sowing Certificate",
+        "Calculate the premium and pay the farmer's share (2% for Kharif, 1.5% for Rabi, 5% for commercial/horticulture crops) online",
+        "Submit the form and download the insurance policy receipt"
+      ],
+      "documents_required": [
+        "Aadhaar Card",
+        "Land Records (7/12 extract or Patta)",
+        "Sowing Certificate (verified by Patwari or Sarpanch)",
+        "Bank Passbook or Cancelled Cheque",
+        "Identity and Address Proof"
+      ],
+      "deadline": "Kharif: July 31; Rabi: December 31"
+    },
+    {
+      "id": "KCC",
+      "name": "Kisan Credit Card Scheme",
+      "name_hi": "किसान क्रेडिट कार्ड योजना",
+      "name_kn": "ಕಿಸಾನ್ ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್ ಯೋಜನೆ",
+      "name_te": "కిసాన్ క్రెడిట్ కార్డ్ పథకం",
+      "name_mr": "किसान क्रेडिट कार्ड योजना",
+      "description": "Short-term credit for farmers to meet crop cultivation expenses, post-harvest needs, and domestic consumption at a low interest rate of 4% (with prompt repayment subsidy).",
+      "annual_benefit_rupees": 300000,
+      "eligibility_rules": {
+        "max_land_holding_ha": null,
+        "excluded_if": [],
+        "min_age": 18,
+        "max_age": 75,
+        "states": "all"
+      },
+      "enrollment_url": "https://www.pmkisan.gov.in/Documents/Kcc.pdf",
+      "enrollment_steps": [
+        "Download the KCC application form from pmkisan.gov.in or visit any commercial/cooperative bank",
+        "Fill in personal details, landholding size, crops grown, and details of PM-KISAN enrollment",
+        "Choose the card limit requested (up to ₹3 Lakhs)",
+        "Submit the form along with Aadhaar, Land Records, and Crop Sowing declaration to the bank branch",
+        "The bank will verify details and issue the Kisan Credit Card within 14 days"
+      ],
+      "documents_required": [
+        "Duly filled application form",
+        "Identity Proof (Aadhaar Card, Voter ID, PAN)",
+        "Address Proof",
+        "Land Ownership Certificate / Patta Book",
+        "Crop Sowing Certificate / Girdawari",
+        "No-Dues Certificate from neighboring financial institutions"
+      ],
+      "deadline": null
+    },
+    {
+      "id": "PM-KMY",
+      "name": "Pradhan Mantri Kisan Maandhan Yojana",
+      "name_hi": "प्रधानमंत्री किसान मान-धन योजना",
+      "name_kn": "ಪ್ರಧಾನ ಮಂತ್ರಿ ಕಿಸಾನ್ ಮಾನ್ ಧನ್ ಯೋಜನೆ",
+      "name_te": "ప్రధాన మంత్రి కిసాన్ మాన్-ధన్ యోజన",
+      "name_mr": "प्रधानमंत्री किसान मान-धन योजना",
+      "description": "Voluntary and contributory pension scheme for small and marginal farmers providing a monthly pension of ₹3,000 upon reaching age 60.",
+      "annual_benefit_rupees": 36000,
+      "eligibility_rules": {
+        "max_land_holding_ha": 2.0,
+        "excluded_if": ["income_tax_payer", "govt_employee", "nps_subscriber", "esic_member"],
+        "min_age": 18,
+        "max_age": 40,
+        "states": "all"
+      },
+      "enrollment_url": "https://maandhan.in",
+      "enrollment_steps": [
+        "Go to the nearest Common Service Center (CSC) or visit maandhan.in",
+        "Provide Aadhaar card and Bank Account details to the CSC agent or enter them online",
+        "Fill the age-specific monthly contribution form (contributions range from ₹55 to ₹200 based on entry age)",
+        "Authorize the bank account for auto-debit of monthly contributions",
+        "Sign the consent form and receive the Pension Card (Kisan Pension Account Number)"
+      ],
+      "documents_required": [
+        "Aadhaar Card",
+        "Bank Passbook with auto-debit facility",
+        "Land holding certificate (Patta/Khata)",
+        "Consent form for auto-debit"
+      ],
+      "deadline": null
+    },
+    {
+      "id": "E-NAM",
+      "name": "Electronic National Agriculture Market",
+      "name_hi": "ई-नाम (राष्ट्रीय कृषि बाजार)",
+      "name_kn": "ಇ-ನಾಮ್ ಯೋಜನೆ",
+      "name_te": "ఈ-నామ్ (జాతీయ వ్యవసాయ మార్కెట్)",
+      "name_mr": "ई-नाम योजना",
+      "description": "Pan-India electronic trading portal networking the existing APMC mandis to create a unified national market for agricultural commodities.",
+      "annual_benefit_rupees": 0,
+      "eligibility_rules": {
+        "max_land_holding_ha": null,
+        "excluded_if": [],
+        "min_age": 18,
+        "max_age": null,
+        "states": "all"
+      },
+      "enrollment_url": "https://enam.gov.in",
+      "enrollment_steps": [
+        "Visit enam.gov.in and click on the 'Register' link",
+        "Select registration type as 'Farmer'",
+        "Fill in user profile, state, district, APMC mandi name, and bank account details",
+        "Upload a scan of the bank passbook or cancelled cheque",
+        "Upon approval by the local mandi administrator, you will receive an e-NAM farmer ID via SMS",
+        "Bring your produce to the registered APMC mandi for quality assaying and electronic bidding"
+      ],
+      "documents_required": [
+        "Aadhaar Card",
+        "Bank Account Details / Passbook Copy",
+        "Mobile number linked with bank",
+        "Mandi Gate Entry Slip (during sales)"
+      ],
+      "deadline": null
+    },
+    {
+      "id": "SOIL-HEALTH-CARD",
+      "name": "Soil Health Card Scheme",
+      "name_hi": "मृदा स्वास्थ्य कार्ड योजना",
+      "name_kn": "ಮಣ್ಣಿನ ಆರೋಗ್ಯ ಕಾರ್ಡ್ ಯೋಜನೆ",
+      "name_te": "నేల ఆరోగ్య కార్డు పథకం",
+      "name_mr": "मृदा आरोग्य पत्रिका योजना",
+      "description": "Provides soil health cards to farmers every 2-3 years, containing status of 12 soil nutrients and customized fertilizer dosage recommendations.",
+      "annual_benefit_rupees": 0,
+      "eligibility_rules": {
+        "max_land_holding_ha": null,
+        "excluded_if": [],
+        "min_age": null,
+        "max_age": null,
+        "states": "all"
+      },
+      "enrollment_url": "https://soilhealth.dac.gov.in",
+      "enrollment_steps": [
+        "Submit soil samples to the local Agriculture Extension Officer (AEO) or nearest soil testing lab",
+        "AEO collects samples with GPS coordinates directly from the farmer's field",
+        "Soil samples are tested for 12 parameters (pH, EC, Organic Carbon, N, P, K, S, Zn, Fe, Cu, Mn, B)",
+        "The Soil Health Card is generated and distributed directly to the farmer, or it can be downloaded from soilhealth.dac.gov.in using Aadhaar number"
+      ],
+      "documents_required": [
+        "Aadhaar Card",
+        "Land surveys and plot numbers",
+        "Mobile Number"
+      ],
+      "deadline": null
+    },
+    {
+      "id": "SMAM",
+      "name": "Sub-Mission on Agricultural Mechanization",
+      "name_hi": "कृषि यंत्रीकरण पर उप-मिशन",
+      "name_kn": "ಕೃಷಿ ಯಾಂತ್ರೀಕರಣ ಯೋಜನೆ",
+      "name_te": "వ్యవసాయ యాంత్రీకరణ ఉప-మిషన్",
+      "name_mr": "कृषी यांत्रिकीकरण उप-अभियान",
+      "description": "Promotes agricultural mechanization by providing 50% to 80% subsidy for purchasing tractors, power tillers, rotavators, harvesters, and custom hiring centers.",
+      "annual_benefit_rupees": 150000,
+      "eligibility_rules": {
+        "max_land_holding_ha": null,
+        "excluded_if": [],
+        "min_age": 18,
+        "max_age": null,
+        "states": "all"
+      },
+      "enrollment_url": "https://agrimachinery.nic.in",
+      "enrollment_steps": [
+        "Register on the DBT portal: agrimachinery.nic.in",
+        "Select your state, district, block, and enter Aadhaar details",
+        "Apply for the specific machinery or implement subsidy",
+        "Upload land details, category certificate (SC/ST/Women/Small farmer get higher subsidies), and dealer quotation",
+        "Await approval of the subsidy application from the district agriculture engineer",
+        "Purchase the machine from an authorized dealer, upload the invoice and serial number, and receive DBT subsidy directly in bank account"
+      ],
+      "documents_required": [
+        "Aadhaar Card",
+        "Land Record Book / Record of Rights",
+        "Caste Certificate (for SC/ST farmers to claim higher subsidy)",
+        "Bank Passbook copy",
+        "Valid mobile number",
+        "Dealer Quotation / Proforma Invoice"
+      ],
+      "deadline": null
+    }
+  ]
+}

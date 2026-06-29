@@ -1,0 +1,470 @@
+{
+  "version": "2025-06-28",
+  "source": "ICAR / KVK Advisory Database",
+  "advisories": [
+    {
+      "crop": "rice",
+      "state": "Andhra Pradesh",
+      "season": "kharif",
+      "varieties": ["NLR-34449", "BPT-5204", "MTU-1010"],
+      "sowing_window": "June-July",
+      "harvesting_window": "November-December",
+      "pests": [
+        {
+          "name": "brown planthopper",
+          "name_hi": "भूरा फुदका",
+          "symptoms": "drying of leaves, hopper burn in patches, honey dew secretion",
+          "treatment": "Spray Dinotefuran 20% SG @ 200g/ha or Pymetrozine 50% WG @ 300g/ha",
+          "irrigation_impact": "Drain the field completely for 3-4 days to check pest multiplication",
+          "icar_reference": "ICAR-IARR/RIC-2024-001"
+        },
+        {
+          "name": "stem borer",
+          "name_hi": "तना छेदक",
+          "symptoms": "dead hearts in vegetative stage, white heads in reproductive stage",
+          "treatment": "Apply Cartap Hydrochloride 4G @ 25 kg/ha or Chlorantraniliprole 18.5 SC @ 150 ml/ha",
+          "irrigation_impact": "Maintain 2-3 cm standing water, do not dry completely",
+          "icar_reference": "ICAR-IARR/RIC-2024-002"
+        }
+      ],
+      "soil_type": "Clay loam",
+      "yield_estimate_qtl_per_ha": 60,
+      "fertilizer": "120:60:40 NPK kg/ha",
+      "irrigation": "Alternate Wetting and Drying (AWD)"
+    },
+    {
+      "crop": "wheat",
+      "state": "Punjab",
+      "season": "rabi",
+      "varieties": ["PBW-825", "HD-3226", "DBW-187"],
+      "sowing_window": "November 1 - November 25",
+      "harvesting_window": "April 1 - April 25",
+      "pests": [
+        {
+          "name": "yellow rust",
+          "name_hi": "पीला रतुआ",
+          "symptoms": "yellow stripes of pustules on leaves, powdery yellow dust",
+          "treatment": "Spray Propiconazole 25% EC @ 500 ml in 500 liters of water per hectare",
+          "irrigation_impact": "Avoid excessive irrigation during cloudy weather",
+          "icar_reference": "ICAR-IIWBR/WHT-2024-001"
+        },
+        {
+          "name": "aphids",
+          "name_hi": "माहू / चेपा",
+          "symptoms": "sucking cell sap from leaves and earheads, sticky honey dew",
+          "treatment": "Spray Imidacloprid 17.8 SL @ 100 ml/ha or Thiamethoxam 25 WG @ 100g/ha",
+          "irrigation_impact": "Ensure proper irrigation, water-stressed crops are more susceptible",
+          "icar_reference": "ICAR-IIWBR/WHT-2024-002"
+        }
+      ],
+      "soil_type": "Clay loam / Loam",
+      "yield_estimate_qtl_per_ha": 55,
+      "fertilizer": "120:60:40 NPK kg/ha",
+      "irrigation": "4-5 critical irrigations (CRI, Jointing, Flowering, Milk stage)"
+    },
+    {
+      "crop": "maize",
+      "state": "Maharashtra",
+      "season": "kharif",
+      "varieties": ["Pusa HM-9 Improved", "Deccan-103", "HQPM-1"],
+      "sowing_window": "June 15 - July 15",
+      "harvesting_window": "October 10 - November 10",
+      "pests": [
+        {
+          "name": "fall armyworm",
+          "name_hi": "फॉल आर्मीवर्म",
+          "symptoms": "papery windowpane feeding marks, large ragged holes, frass in whorls",
+          "treatment": "Spray Emamectin Benzoate 5% SG @ 0.4g/L or Spinetoram 11.7 SC @ 0.5ml/L",
+          "irrigation_impact": "Provide light irrigation to keep plants vigorous",
+          "icar_reference": "ICAR-IIMR/MAZ-2024-001"
+        }
+      ],
+      "soil_type": "Well-drained sandy loam / black soil",
+      "yield_estimate_qtl_per_ha": 45,
+      "fertilizer": "120:60:40 NPK kg/ha",
+      "irrigation": "Irrigate at critical stages: tasseling, silking, grain filling"
+    },
+    {
+      "crop": "cotton",
+      "state": "Maharashtra",
+      "season": "kharif",
+      "varieties": ["Ajit-155", "Mallika", "RCH-2"],
+      "sowing_window": "May 25 - June 15",
+      "harvesting_window": "November - February (multiple pickings)",
+      "pests": [
+        {
+          "name": "pink bollworm",
+          "name_hi": "गुलाबी सुंडी",
+          "symptoms": "rosette flowers, hollowed-out seeds, stained lint, holes in green bolls",
+          "treatment": "Spray Profenophos 50 EC @ 2ml/L or Lambdacyhalothrin 5 EC @ 1ml/L",
+          "irrigation_impact": "Avoid late-season irrigation which extends vegetative growth",
+          "icar_reference": "ICAR-CICR/COT-2024-001"
+        }
+      ],
+      "soil_type": "Deep black cotton soil",
+      "yield_estimate_qtl_per_ha": 22,
+      "fertilizer": "100:50:50 NPK kg/ha",
+      "irrigation": "4-5 irrigations; sensitive to waterlogging, ensure drainage"
+    },
+    {
+      "crop": "sugarcane",
+      "state": "Uttar Pradesh",
+      "season": "kharif",
+      "varieties": ["Co-0238", "CoLk-94184", "CoJ-85"],
+      "sowing_window": "February - April (Spring planting)",
+      "harvesting_window": "December - March",
+      "pests": [
+        {
+          "name": "early shoot borer",
+          "name_hi": "अगेती तना छेदक",
+          "symptoms": "dead hearts in young shoots, easily pulled out, emits offensive smell",
+          "treatment": "Apply Chlorantraniliprole 0.4% G @ 18.75 kg/ha or soil drenching with Chlorantraniliprole 18.5 SC @ 375 ml/ha",
+          "irrigation_impact": "Frequent light irrigations during hot weather reduce pest incidence",
+          "icar_reference": "ICAR-IISR/SUG-2024-001"
+        }
+      ],
+      "soil_type": "Rich loamy soil",
+      "yield_estimate_qtl_per_ha": 800,
+      "fertilizer": "150:60:60 NPK kg/ha",
+      "irrigation": "10-12 irrigations, drip system highly recommended"
+    },
+    {
+      "crop": "tomato",
+      "state": "Karnataka",
+      "season": "kharif",
+      "varieties": ["Arka Vikas", "Arka Rakshak", "Arka Ananya"],
+      "sowing_window": "June - July (Nursery)",
+      "harvesting_window": "September - November",
+      "pests": [
+        {
+          "name": "whitefly",
+          "name_hi": "सफेद मक्खी",
+          "symptoms": "yellow leaves, sticky honey dew, soot like growth, leaf curling",
+          "treatment": "Spray Neem oil 5% or Imidacloprid 17.8 SL @ 0.3 ml/L of water",
+          "irrigation_impact": "Reduce water for 2 days, let soil dry out slightly",
+          "icar_reference": "ICAR-IIHR/TOM-2023-001"
+        },
+        {
+          "name": "early blight",
+          "name_hi": "अगेती अंगमारी",
+          "symptoms": "concentric target-board rings on older leaves, yellow halo",
+          "treatment": "Spray Mancozeb 75% WP @ 2g/L or Tebuconazole @ 1ml/L",
+          "irrigation_impact": "Avoid overhead sprinkler irrigation; keep foliage dry",
+          "icar_reference": "ICAR-IIHR/TOM-2023-002"
+        }
+      ],
+      "soil_type": "Well-drained red sandy loam",
+      "yield_estimate_qtl_per_ha": 350,
+      "fertilizer": "120:80:80 NPK kg/ha",
+      "irrigation": "Drip irrigation, 5-7 days interval"
+    },
+    {
+      "crop": "potato",
+      "state": "Uttar Pradesh",
+      "season": "rabi",
+      "varieties": ["Kufri Bahar", "Kufri Jyoti", "Kufri Pukhraj"],
+      "sowing_window": "October 15 - November 10",
+      "harvesting_window": "February 15 - March 15",
+      "pests": [
+        {
+          "name": "late blight",
+          "name_hi": "पछेती झुलसा",
+          "symptoms": "water-soaked spots on leaves, white cottony growth on underside, rapid browning",
+          "treatment": "Spray Metalaxyl + Mancozeb @ 2.5 g/L or Cymoxanil + Mancozeb @ 2 g/L",
+          "irrigation_impact": "Suspend irrigation immediately if relative humidity exceeds 90%",
+          "icar_reference": "ICAR-CPRI/POT-2024-001"
+        }
+      ],
+      "soil_type": "Well-drained sandy loam",
+      "yield_estimate_qtl_per_ha": 300,
+      "fertilizer": "150:80:100 NPK kg/ha",
+      "irrigation": "Light furrow irrigations, maintain 60-70% soil moisture"
+    },
+    {
+      "crop": "onion",
+      "state": "Maharashtra",
+      "season": "rabi",
+      "varieties": ["N-2-4-1", "Bhima Kiran", "Bhima Shakti"],
+      "sowing_window": "October - November",
+      "harvesting_window": "March - April",
+      "pests": [
+        {
+          "name": "thrips",
+          "name_hi": "थ्रिप्स / चुरदा",
+          "symptoms": "silvery patches on leaves, leaf curling and drying from tips",
+          "treatment": "Spray Fipronil 5 SC @ 1.5 ml/L or Deltamethrin @ 1 ml/L",
+          "irrigation_impact": "Sprinkler irrigation helps in washing away thrips populations",
+          "icar_reference": "ICAR-DOGR/ONN-2024-001"
+        }
+      ],
+      "soil_type": "Deep friable loamy soil",
+      "yield_estimate_qtl_per_ha": 250,
+      "fertilizer": "100:50:50 NPK kg/ha + Sulphur 40 kg/ha",
+      "irrigation": "10-12 day interval; stop irrigation 15 days before harvest"
+    },
+    {
+      "crop": "soybean",
+      "state": "Madhya Pradesh",
+      "season": "kharif",
+      "varieties": ["JS-9560", "JS-2034", "NRC-37"],
+      "sowing_window": "June 15 - July 10",
+      "harvesting_window": "September 25 - October 20",
+      "pests": [
+        {
+          "name": "girdle beetle",
+          "name_hi": "गर्डल बीटल",
+          "symptoms": "two parallel rings girdled on stems, drying of leaves and branches",
+          "treatment": "Spray Chlorantraniliprole 18.5 SC @ 150 ml/ha or Thiacloprid 21.7 SC @ 650 ml/ha",
+          "irrigation_impact": "Maintain soil moisture but avoid waterlogging",
+          "icar_reference": "ICAR-IISR/SOY-2024-001"
+        }
+      ],
+      "soil_type": "Medium to deep black soils",
+      "yield_estimate_qtl_per_ha": 20,
+      "fertilizer": "20:60:40 NPK kg/ha + Sulphur 20 kg/ha",
+      "irrigation": "Mostly rainfed, needs protective irrigation at flowering/pod-filling if dry"
+    },
+    {
+      "crop": "groundnut",
+      "state": "Andhra Pradesh",
+      "season": "kharif",
+      "varieties": ["Kadiri-6", "K-9", "Narayani"],
+      "sowing_window": "June - July",
+      "harvesting_window": "October - November",
+      "pests": [
+        {
+          "name": "leaf root grub",
+          "name_hi": "सफेद लट",
+          "symptoms": "wilting and drying of plants in patches, roots eaten up",
+          "treatment": "Soil application of Imidacloprid 17.8 SL @ 300 ml/ha or Carbofuran 3G @ 30 kg/ha",
+          "irrigation_impact": "Apply light irrigation after treatment to wash chemical into soil",
+          "icar_reference": "ICAR-DGR/GND-2024-001"
+        }
+      ],
+      "soil_type": "Well-drained sandy loam / red soils",
+      "yield_estimate_qtl_per_ha": 25,
+      "fertilizer": "20:40:50 NPK kg/ha + Gypsum 500 kg/ha at pegging",
+      "irrigation": "4-5 critical irrigations (Flowering, Pegging, Pod formation)"
+    },
+    {
+      "crop": "banana",
+      "state": "Karnataka",
+      "season": "kharif",
+      "varieties": ["Grand Naine", "Robusta", "Elakki Yashodhara"],
+      "sowing_window": "June - September",
+      "harvesting_window": "Year-round (11-13 months crop cycle)",
+      "pests": [
+        {
+          "name": "pseudostem weevil",
+          "name_hi": "तना घुन",
+          "symptoms": "jelly-like exudation on pseudostem, pinholes on stem, breaking of leaf petiole",
+          "treatment": "Stem injection of Monocrotophos @ 4 ml per plant or drenching with Chlorpyriphos @ 2.5 ml/L",
+          "irrigation_impact": "Maintain optimum soil moisture, avoid dry cracks in soil",
+          "icar_reference": "ICAR-NRCB/BAN-2024-001"
+        }
+      ],
+      "soil_type": "Rich loamy soil, good drainage",
+      "yield_estimate_qtl_per_ha": 400,
+      "fertilizer": "200:200:400 NPK g/plant/year",
+      "irrigation": "Drip irrigation daily (15-20 liters/plant/day)"
+    },
+    {
+      "crop": "mango",
+      "state": "Andhra Pradesh",
+      "season": "rabi",
+      "varieties": ["Banganapalli", "Totapuri", "Suvarnarekha"],
+      "sowing_window": "July - August (Planting)",
+      "harvesting_window": "April - June",
+      "pests": [
+        {
+          "name": "mango hopper",
+          "name_hi": "आम का भुनगा",
+          "symptoms": "infest inflorescence and leaves, honey dew secretion, development of sooty mold",
+          "treatment": "Spray Thiamethoxam 25 WG @ 0.2g/L or Imidacloprid 17.8 SL @ 0.3ml/L during flowering",
+          "irrigation_impact": "Stop irrigation during flowering to encourage fruit set",
+          "icar_reference": "ICAR-CISH/MNG-2024-001"
+        }
+      ],
+      "soil_type": "Deep alluvial / red loamy soils",
+      "yield_estimate_qtl_per_ha": 100,
+      "fertilizer": "1:0.5:1 NPK kg/tree/year for mature trees",
+      "irrigation": "Irrigate at 10-15 day intervals during fruit growth stage"
+    },
+    {
+      "crop": "chilli",
+      "state": "Andhra Pradesh",
+      "season": "kharif",
+      "varieties": ["Guntur-3", "LCA-334", "Byadagi"],
+      "sowing_window": "July - August",
+      "harvesting_window": "December - April",
+      "pests": [
+        {
+          "name": "thrips",
+          "name_hi": "चुरदा मुरदा",
+          "symptoms": "upward curling of leaf margins, elongation of leaves, crinkling",
+          "treatment": "Spray Spinosad 45 SC @ 0.3ml/L or Acetamiprid 20 SP @ 0.2g/L",
+          "irrigation_impact": "Avoid severe water stress; irrigate uniformly",
+          "icar_reference": "ICAR-IIHR/CHL-2024-001"
+        }
+      ],
+      "soil_type": "Sandy loam / rich clayey loam",
+      "yield_estimate_qtl_per_ha": 20,
+      "fertilizer": "150:60:60 NPK kg/ha",
+      "irrigation": "Regular drip or furrow irrigation; do not let dry out completely"
+    },
+    {
+      "crop": "turmeric",
+      "state": "Maharashtra",
+      "season": "kharif",
+      "varieties": ["Selam", "IISR Pragati", "Phule Swarup"],
+      "sowing_window": "May - June",
+      "harvesting_window": "January - March",
+      "pests": [
+        {
+          "name": "rhizome rot",
+          "name_hi": "कंद सड़न",
+          "symptoms": "yellowing of leaves from margins, pseudostem becomes loose, rotting rhizomes",
+          "treatment": "Drench soil with Metalaxyl-Mancozeb @ 2.5g/L or Trichoderma viride bioagent @ 10g/L",
+          "irrigation_impact": "Ensure excellent drainage, avoid water stagnancy",
+          "icar_reference": "ICAR-IISR/TUR-2024-001"
+        }
+      ],
+      "soil_type": "Clayey loam / alluvial soil with organic matter",
+      "yield_estimate_qtl_per_ha": 30,
+      "fertilizer": "60:50:120 NPK kg/ha",
+      "irrigation": "15-20 irrigations in medium-heavy soils; critical at rhizome development"
+    },
+    {
+      "crop": "mustard",
+      "state": "Punjab",
+      "season": "rabi",
+      "varieties": ["Pusa Bold", "Giriraj", "RH-725"],
+      "sowing_window": "October 10 - October 30",
+      "harvesting_window": "February 15 - March 15",
+      "pests": [
+        {
+          "name": "mustard aphid",
+          "name_hi": "सरसों का चेपा",
+          "symptoms": "infest growing points, green pods cover with aphids, leaf curling, weak plants",
+          "treatment": "Spray Thiamethoxam 25 WG @ 100g/ha or Dimethoate 30 EC @ 1L/ha",
+          "irrigation_impact": "Apply irrigation at flowering to help plants resist aphid attack",
+          "icar_reference": "ICAR-DRMR/MST-2024-001"
+        }
+      ],
+      "soil_type": "Sandy loam to clay loam",
+      "yield_estimate_qtl_per_ha": 18,
+      "fertilizer": "80:40:40 NPK kg/ha + Sulphur 40 kg/ha",
+      "irrigation": "2 irrigations critical (pre-flowering and pod-fill stage)"
+    },
+    {
+      "crop": "lentil",
+      "state": "Uttar Pradesh",
+      "season": "rabi",
+      "varieties": ["Pusa Ageti", "IPL-316", "K-75"],
+      "sowing_window": "October 15 - November 15",
+      "harvesting_window": "March 1 - March 30",
+      "pests": [
+        {
+          "name": "wilt",
+          "name_hi": "उकठा रोग",
+          "symptoms": "sudden drooping of leaves, drying up of root system, blackening of roots",
+          "treatment": "Seed treatment with Carbendazim + Mancozeb @ 2.5g/kg seed; soil application of Trichoderma viride",
+          "irrigation_impact": "Do not flood irrigate; maintain moderate moisture",
+          "icar_reference": "ICAR-IIPR/LEN-2024-001"
+        }
+      ],
+      "soil_type": "Loam to light clay soils",
+      "yield_estimate_qtl_per_ha": 15,
+      "fertilizer": "20:40:20 NPK kg/ha + Rhizobium culture",
+      "irrigation": "1-2 light irrigations, first at 35-40 days after sowing"
+    },
+    {
+      "crop": "chickpea",
+      "state": "Maharashtra",
+      "season": "rabi",
+      "varieties": ["Vijay", "Digvijay", "JAKI-9218"],
+      "sowing_window": "October 15 - November 10",
+      "harvesting_window": "February 15 - March 15",
+      "pests": [
+        {
+          "name": "pod borer",
+          "name_hi": "फली छेदक",
+          "symptoms": "defoliation in early stage, circular holes on pods, caterpillar feeding on seeds inside",
+          "treatment": "Spray Chlorantraniliprole 18.5 SC @ 150 ml/ha or Indoxacarb 14.5 SC @ 350 ml/ha",
+          "irrigation_impact": "Avoid over-irrigation; excessive moisture increases vegetative growth and pest susceptibility",
+          "icar_reference": "ICAR-IIPR/CHK-2024-001"
+        }
+      ],
+      "soil_type": "Sandy clay loam / black soils",
+      "yield_estimate_qtl_per_ha": 18,
+      "fertilizer": "20:50:20 NPK kg/ha + Sulphur 20 kg/ha",
+      "irrigation": "2 protective irrigations: pre-flowering and pod development"
+    },
+    {
+      "crop": "sunflower",
+      "state": "Karnataka",
+      "season": "kharif",
+      "varieties": ["KBSH-53", "RSFH-130", "DRSH-1"],
+      "sowing_window": "June 15 - July 15",
+      "harvesting_window": "September 15 - October 15",
+      "pests": [
+        {
+          "name": "head rot",
+          "name_hi": "मुंडक सड़न",
+          "symptoms": "brownish water-soaked lesions on back of heads, rotting and shredding of heads",
+          "treatment": "Spray Carbendazim @ 1g/L or Mancozeb @ 2g/L on the flower head",
+          "irrigation_impact": "Avoid excessive irrigation at maturity stage, avoid lodging",
+          "icar_reference": "ICAR-IIOR/SUN-2024-001"
+        }
+      ],
+      "soil_type": "Medium black or sandy loam",
+      "yield_estimate_qtl_per_ha": 16,
+      "fertilizer": "60:75:60 NPK kg/ha",
+      "irrigation": "4-5 irrigations; critical at bud-initiation, flowering, and seed filling"
+    },
+    {
+      "crop": "jute",
+      "state": "West Bengal",
+      "season": "kharif",
+      "varieties": ["JRO-524 (Naveen)", "JRO-204", "CO-58"],
+      "sowing_window": "March 15 - May 15",
+      "harvesting_window": "July 15 - September 15",
+      "pests": [
+        {
+          "name": "jute semilooper",
+          "name_hi": "जूट सेमीलूपर",
+          "symptoms": "caterpillars feed on apical leaves, damaged crown, branching of stems",
+          "treatment": "Spray Profenophos 50 EC @ 2ml/L or Lambdacyhalothrin @ 1ml/L",
+          "irrigation_impact": "Ensure optimal irrigation; high humidity triggers infestation",
+          "icar_reference": "ICAR-CRIJAF/JUT-2024-001"
+        }
+      ],
+      "soil_type": "Rich sandy loam / alluvial soils",
+      "yield_estimate_qtl_per_ha": 25,
+      "fertilizer": "60:30:30 NPK kg/ha",
+      "irrigation": "4-5 irrigations; waterlogging must be avoided in early stages"
+    },
+    {
+      "crop": "tea",
+      "state": "West Bengal",
+      "season": "kharif",
+      "varieties": ["TV-1", "TV-23", "B-157"],
+      "sowing_window": "October - November (Planting)",
+      "harvesting_window": "March - December (Plucking cycles)",
+      "pests": [
+        {
+          "name": "red spider mite",
+          "name_hi": "लाल मकड़ी",
+          "symptoms": "reddish-brown spots on upper surface of leaves, dusty appearance",
+          "treatment": "Spray Fenpyroximate 5 EC @ 1ml/L or Spiromesifen 22.9 SC @ 0.8ml/L",
+          "irrigation_impact": "Maintain high humidity by overhead sprinkler/mist system to check mites",
+          "icar_reference": "TRA-UPASI/TEA-2024-001"
+        }
+      ],
+      "soil_type": "Acidic soil, rich in humus, well-drained",
+      "yield_estimate_qtl_per_ha": 18,
+      "fertilizer": "150:50:100 NPK kg/ha",
+      "irrigation": "Mist/sprinkler irrigation regularly to maintain microclimate"
+    }
+  ]
+}
