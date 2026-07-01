@@ -1,0 +1,45 @@
+from __future__ import annotations
+
+try:
+    from google_adk import Agent  # type: ignore
+except ImportError:
+    try:
+        from google.adk.agents import Agent  # type: ignore
+    except ImportError:
+        class Agent:
+            def __init__(self, **kwargs): pass
+
+# Define the local tool wrapper function for ADK Agent
+async def get_crop_advisory(crop: str, state: str, season: str, symptom: str) -> dict:
+    """Get ICAR-validated crop advisory for pest/disease management.
+    
+    Args:
+        crop: Crop name (e.g., rice, wheat, tomato)
+        state: Indian state name
+        season: Growing season - kharif or rabi
+        symptom: Observed plant symptom or disease name
+    
+    Returns:
+        Advisory with treatments, ICAR references, and irrigation advice.
+    """
+    from mcp_server.tools.crop_tool import get_crop_advisory as _impl
+    return await _impl(crop=crop, state=state, season=season, symptom=symptom)
+
+crop_advisor_agent = Agent(
+    name="crop_advisor",
+    model="gemini-2.5-flash",
+    description="Expert crop advisor powered by ICAR research data. Diagnoses pests and diseases, recommends treatments.",
+    instruction="""You are an expert crop advisor for Indian farmers, powered by ICAR (Indian Council of Agricultural Research) data.
+
+When a farmer describes a crop issue:
+1. Use the get_crop_advisory tool to look up scientific advice
+2. ALWAYS cite the ICAR reference code in your response
+3. Provide treatment in simple, actionable steps
+4. Include irrigation and pesticide recommendations
+5. NEVER make up advice — only use data from the tool
+6. If no data found, say: "No ICAR-validated advisory available. Please contact your nearest Krishi Vigyan Kendra (KVK)."
+7. ALWAYS respond in the SAME LANGUAGE the farmer used
+8. Use respectful, culturally appropriate tone (address as "किसान भाई" in Hindi, etc.)
+""",
+    tools=[get_crop_advisory],
+)
