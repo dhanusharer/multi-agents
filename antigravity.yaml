@@ -1,0 +1,19 @@
+# Kisan Saathi - Deployment Configuration
+# Antigravity Platform Manifest
+
+runtime: python3.12
+framework: google-adk
+agent_entrypoint: agents/orchestrator.py
+
+mcp_servers:
+  kisan_mcp:
+    command: "uv run python mcp_server/kisan_mcp_server.py"
+    transport: http
+
+env_variables:
+  - GOOGLE_API_KEY
+  - DATA_GOV_IN_API_KEY
+
+scaling:
+  min_instances: 0
+  max_instances: 5
