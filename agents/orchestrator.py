@@ -67,7 +67,7 @@ YOUR ROLES:
    - WEATHER_ADVICE
    - MARKET_PRICE
    - GENERAL (agricultural greetings/general info)
-5. MERGE & SYNTHESIZE: Combine the specialist responses into a single, cohesive, respectful response in the farmer's native language. Keep it under 300 words.
+5. MERGE & SYNTHESIZE: Combine the specialist responses into a single, cohesive, respectful response in the farmer's native language. Keep general greetings brief, but allow detailed specialist advisories (disease controls, weather forecasts, schemes, mandi prices) to be as comprehensive, detailed, and rich as possible to provide maximum helpful value.
 
 IMPORTANT: NEVER mix English words into Kannada/Hindi/Telugu/Marathi sentences (no English bleed). Be culturally respectful.
 """
@@ -126,14 +126,14 @@ class KisanSaathiOrchestrator:
         ]
         
         weather_keywords = [
-            "\u092e\u094c\u0938\u092e", "\u092c\u093e\u0930\u093f\u0936", "\u0924\u093e\u092a\u092e\u093e\u0928", "\u0939\u0935\u093e", "weather", "rain", "temperature", "forecast", "precipitation", "wind", 
+            "\u092e\u094c\u0938\u092e", "\u092c\u093e\u0930\u093f\u0936", "\u0924\u093e\u092a\u092e\u093e\u0928", "\u0939\u0935\u093e", "weather", "rain", "temperature", "forecast", "forecasts", "climate", "wheather", "precipitation", "wind", 
             "humidity", "hail", "frost", "cyclone", "monsoon", "cloud", "fog", "heatwave", "\u092a\u0942\u0930\u094d\u0935\u093e\u0928\u0941\u092e\u093e\u0928", "\u0915\u094b\u0939\u0930\u093e", "\u092a\u093e\u0932\u093e", 
             "\u0913\u0932\u0947", "\u0924\u0942\u095e\u093e\u0928", "\u0917\u0930\u094d\u092e\u0940", "barish", "baarish", "temp", "hailstorm", "dry spell", "wind speed", "lightning", 
             "uv index", "dew point", "aandhi"
         ]
         
         market_keywords = [
-            "\u092d\u093e\u0935", "\u0915\u0940\u092e\u0924", "\u0926\u093e\u092e", "\u092e\u0902\u0921\u0940", "\u0926\u0930", "msp", "price", "mandi", "rate", "market", "\u092c\u0947\u091a\u0947", "\u092c\u093f\u0915", "bhav", "kimat", 
+            "\u092d\u093e\u0935", "\u0915\u0940\u092e\u0924", "\u0926\u093e\u092e", "\u092e\u0902\u0921\u0940", "\u0926\u0930", "msp", "price", "prices", "mandi", "rate", "rates", "market", "\u092c\u0947\u091a\u0947", "\u092c\u093f\u0915", "bhav", "kimat", 
             "dam", "sell", "hold", "cost", "worth"
         ]
         
@@ -175,6 +175,56 @@ class KisanSaathiOrchestrator:
             words = set(re.findall(r"\b\w+\b", lower_q))
             if words.intersection(hinglish_words):
                 language = "hi"
+
+        # Fallback to semantic LLM classification if keyword classification defaults to GENERAL
+        if intents == ["GENERAL"]:
+            try:
+                import os
+                from google import genai
+                from google.genai import types
+                
+                api_key = os.getenv("GOOGLE_API_KEY")
+                if api_key:
+                    client = genai.Client(api_key=api_key)
+                    prompt = f"""
+                    You are the Kisan Saathi intent classifier.
+                    Analyze the following query from an Indian farmer:
+                    "{query}"
+                    
+                    Classify the query into one or more of these intents:
+                    - CROP_ADVISORY: queries about crop diseases, pests, treatments, soil, sowing, varieties, seeds, irrigation, fertilizers.
+                    - SCHEME_LOOKUP: queries about government schemes, subsidies, loans, bima/insurance, pension, eligibility.
+                    - WEATHER_ADVICE: queries about weather, rain, temperature, wind, forecast, climate, or weather actions.
+                    - MARKET_PRICE: queries about mandi prices, crop rates, market value, MSP comparisons.
+                    - GENERAL: greetings, generic thanks, or off-topic queries.
+                    
+                    Identify the query language (en, hi, kn, te, mr).
+                    
+                    Respond ONLY with a valid JSON block containing:
+                    {{
+                        "intents": ["INTENT_NAME_1", ...],
+                        "language": "lang_code"
+                    }}
+                    """
+                    response = client.models.generate_content(
+                        model='gemini-2.5-flash',
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            response_mime_type="application/json"
+                        )
+                    )
+                    if response.text:
+                        res_data = json.loads(response.text.strip())
+                        llm_intents = res_data.get("intents", [])
+                        llm_lang = res_data.get("language", "en")
+                        
+                        valid_intents = [i for i in llm_intents if i in ["CROP_ADVISORY", "SCHEME_LOOKUP", "WEATHER_ADVICE", "MARKET_PRICE"]]
+                        if valid_intents:
+                            intents = valid_intents
+                        if llm_lang in ["en", "hi", "kn", "te", "mr"]:
+                            language = llm_lang
+            except Exception:
+                pass
                 
         return language, intents
 
@@ -312,7 +362,7 @@ class KisanSaathiOrchestrator:
         profile.update({k: v for k, v in extracted.items() if v is not None})
         return profile
 
-    async def run(self, query: str, session_id: str = "default_session") -> str:
+    async def run(self, query: str, session_id: str = "default_session", image_base64: Optional[str] = None) -> str:
         """Process farmer query through validation, dispatch, synthesis, and safety checks."""
         start_time = time.time()
         
@@ -329,6 +379,87 @@ class KisanSaathiOrchestrator:
         
         # 3. Detect Language & Intent
         language, intents = await self.detect_language_and_intent(query)
+
+        # AI Vision Multimodal Analysis:
+        self.vision_prefix = ""
+        if image_base64:
+            import os
+            import base64
+            from google import genai
+            from google.genai import types
+
+            api_key = os.environ.get("GEMINI_API_KEY")
+            if api_key:
+                try:
+                    client = genai.Client(api_key=api_key)
+                    # Parse base64
+                    mime_type = "image/jpeg"
+                    image_data = image_base64
+                    if "," in image_base64:
+                        header, image_data = image_base64.split(",", 1)
+                        if "image/png" in header:
+                            mime_type = "image/png"
+                        elif "image/webp" in header:
+                            mime_type = "image/webp"
+                            
+                    raw_bytes = base64.b64decode(image_data)
+                    image_part = types.Part.from_bytes(
+                        data=raw_bytes,
+                        mime_type=mime_type
+                    )
+                    
+                    prompt = """
+                    You are an expert plant pathologist. Analyze this crop leaf photo.
+                    Identify:
+                    1. The name of the crop (must be one of: tomato, rice, wheat, cotton, maize, sugarcane, potato, onion, soybean, banana, mango, chilli, turmeric, mustard, lentil, chickpea, sunflower, jute, tea).
+                    2. The disease or pest symptoms visible in the photo.
+                    
+                    Respond ONLY with a valid JSON block containing:
+                    {
+                        "crop": "crop_name",
+                        "detected_disease": "disease_or_pest_name",
+                        "symptoms": "short symptom description",
+                        "confidence": 0.95
+                    }
+                    """
+                    
+                    response = client.models.generate_content(
+                        model='gemini-2.5-flash',
+                        contents=[image_part, prompt],
+                        config=types.GenerateContentConfig(
+                            response_mime_type="application/json"
+                        )
+                    )
+                    
+                    if response.text:
+                        res_data = json.loads(response.text.strip())
+                        detected_crop = res_data.get("crop", "").lower()
+                        detected_disease = res_data.get("detected_disease", "")
+                        
+                        # Update session details with detected crop
+                        valid_crops = ["tomato", "rice", "wheat", "cotton", "maize", "sugarcane", "potato", "onion", "soybean", "banana", "mango", "chilli", "turmeric", "mustard", "lentil", "chickpea", "sunflower", "jute", "tea"]
+                        if detected_crop in valid_crops:
+                            profile["crop"] = detected_crop
+                            self.session_service.update(session_id, **profile)
+                            
+                        # Set symptoms for tool lookup
+                        query = detected_disease or query
+                        if "CROP_ADVISORY" not in intents:
+                            intents.append("CROP_ADVISORY")
+                            
+                        # Add dynamic visual diagnosis header
+                        if language == "hi":
+                            self.vision_prefix = f"📷 **[एआई छवि निदान]**: मैंने आपके द्वारा अपलोड की गई तस्वीर का विश्लेषण किया।\n• पहचाना गया पौधा: **{detected_crop.capitalize()}**\n• संभावित रोग/कीट: **{detected_disease}**\n\n"
+                        elif language == "kn":
+                            self.vision_prefix = f"📷 **[AI ಚಿತ್ರ ವಿಶ್ಲೇಷಣೆ]**: ನೀವು ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ಚಿತ್ರವನ್ನು ವಿಶ್ಲೇಷಿಸಲಾಗಿದೆ.\n• ಗುರುತಿಸಲಾದ ಬೆಳೆ: **{detected_crop.capitalize()}**\n• ಸಂಭವನೀಯ ರೋಗ/ಕೀಟ: **{detected_disease}**\n\n"
+                        elif language == "te":
+                            self.vision_prefix = f"📷 **[AI చిత్ర విశ్లేషణ]**: మీరు అప్ లోడ్ చేసిన చిత్రాన్ని విశ్లేషించాను.\n• గుర్తించిన పంట: **{detected_crop.capitalize()}**\n• ఆశించిన తెగులు/కీటకం: **{detected_disease}**\n\n"
+                        elif language == "mr":
+                            self.vision_prefix = f"📷 **[AI प्रतिमा विश्लेषण]**: मी अपलोड केलेल्या प्रतिमेचे विश्लेषण केले.\n• पिकाचे नाव: **{detected_crop.capitalize()}**\n• संभाव्य रोग/कीट: **{detected_disease}**\n\n"
+                        else:
+                            self.vision_prefix = f"📷 **[AI Image Diagnosis]**: I analyzed the uploaded photo.\n• Crop Identified: **{detected_crop.capitalize()}**\n• Suspected Disease/Pest: **{detected_disease}**\n\n"
+                except Exception as e:
+                    self.vision_prefix = f"⚠️ [AI Vision Error]: Failed to analyze image. {str(e)}\n\n"
 
         # Restore pending intents if the current intent is GENERAL and we have a loop pending
         if "GENERAL" in intents and profile.get("pending_intents"):
@@ -464,6 +595,8 @@ class KisanSaathiOrchestrator:
 
         # 6. Response Synthesis
         synthesized_text = "\n\n".join(agent_responses.values())
+        if hasattr(self, "vision_prefix") and self.vision_prefix:
+            synthesized_text = self.vision_prefix + synthesized_text
 
         # 7. Output Validator Safety check
         is_valid, violations = self.output_validator.validate(synthesized_text)
@@ -479,59 +612,102 @@ class KisanSaathiOrchestrator:
     def _format_crop_response(self, data: dict, lang: str) -> str:
         """Helper to format crop advisory localized."""
         crop_name = data.get("crop", "")
-        disease = data.get("diseases", [""])[0]
-        treatment = data.get("treatments", [""])[0]
-        irrigation = data.get("irrigation_advice", "")
+        disease = data.get("diseases", [""])[0] if data.get("diseases") else ""
+        treatment = data.get("treatments", [""])[0] if data.get("treatments") else ""
+        irrigation_impact = data.get("irrigation_advice", "")
         ref = data.get("icar_reference_code", "")
         varieties = ", ".join(data.get("varieties", []))
         sowing = data.get("sowing_window", "")
+        harvesting = data.get("harvesting_window", "")
+        soil_type = data.get("soil_type", "")
+        fertilizer = data.get("fertilizer_recommendation", "")
+        irrigation_gen = data.get("general_irrigation_guideline", "")
+        expected_yield = data.get("expected_yield_qtl_per_ha", "")
 
         if lang == "hi":
-            res = f"\U0001F33E **\u092b\u0938\u0932 \u0938\u0932\u093e\u0939 ({crop_name.capitalize()})**:\n"
-            if disease:
-                res += f"- **\u0938\u0902\u092d\u093e\u0935\u093f\u0924 \u0930\u094b\u0917/\u0915\u0940\u091f**: {disease}\n- **\u0909\u092a\u091a\u093e\u0930**: {treatment}\n"
-            res += f"- **\u0938\u093f\u0902\u091a\u093e\u0908 \u0938\u0932\u093e\u0939**: {irrigation}\n"
-            if varieties:
-                res += f"- **\u0905\u0928\u0941\u0936\u0902\u0938\u093f\u0924 \u0915\u093f\u0938\u094d\u092e\u0947\u0902**: {varieties}\n"
-            if sowing:
-                res += f"- **\u092c\u0941\u0935\u093e\u0908 \u0915\u093e \u0938\u092e\u092f**: {sowing}\n"
-            res += f"*(\u0938\u0902\u0926\u0930\u094d\u092d \u0915\u094b\u0921: {ref})*"
+            res = f"🌾 **कृषि सलाह रिपोर्ट - {crop_name.upper()}**\n\n"
+            if disease and disease != "General Health / Diagnostic Pending" and disease != "Unknown/unlisted disease":
+                res += f"🔍 **रोग/कीट पहचान**: {disease}\n"
+                res += f"💊 **आईसीएआर अनुशंसित उपचार**: {treatment}\n"
+                res += f"💧 **कीट-विशिष्ट सिंचाई सलाह**: {irrigation_impact}\n\n"
+            
+            res += f"🌱 **सकल फसल दिशानिर्देश और सिंचाई प्रबंधन**:\n"
+            res += f"- **सकल सिंचाई दिशानिर्देश**: {irrigation_gen}\n"
+            res += f"- **अनुशंसित मिट्टी प्रकार**: {soil_type}\n"
+            res += f"- **उर्वरक प्रबंधन (NPK)**: {fertilizer}\n"
+            res += f"- **बुवाई अवधि**: {sowing}\n"
+            res += f"- **कटाई अवधि**: {harvesting}\n"
+            res += f"- **उन्नत किस्में**: {varieties}\n"
+            res += f"- **अनुमानित उपज**: {expected_yield} क्विंटल/हेक्टेयर\n\n"
+            res += f"*(संदर्भ संख्या: {ref})*"
             return res
         elif lang == "kn":
-            res = f"\U0001F33E **\u0CAC\u0CC6\u0CB3\u0CC6 \u0CB8\u0CB2\u0CB9\u0CC6 ({crop_name.capitalize()})**:\n"
-            if disease:
-                res += f"- **\u0CB0\u0CCB\u0C97/\u0C95\u0CC0\u0C9F**: {disease}\n- **\u0CAA\u0CB0\u0CBF\u0CB9\u0CBE\u0CB0**: {treatment}\n"
-            res += f"- **\u0CA8\u0CC0\u0CB0\u0CBE\u0CB5\u0CB0\u0CBF \u0CB8\u0CB2\u0CB9\u0CC6**: {irrigation}\n"
-            if varieties:
-                res += f"- **\u0CB6\u0CBF\u0CAB\u0CBE\u0CB0\u0CB8\u0CC1 \u0CAE\u0CBE\u0CA1\u0CBF\u0CA6 \u0CA4\u0CB3\u0CBF\u0C97\u0CB3\u0CC1**: {varieties}\n"
-            res += f"*(\u0C86\u0CA7\u0CBE\u0CB0: {ref})*"
+            res = f"🌾 **ಬೆಳೆ ಸಲಹಾ ವರದಿ - {crop_name.upper()}**\n\n"
+            if disease and disease != "General Health / Diagnostic Pending" and disease != "Unknown/unlisted disease":
+                res += f"🔍 **ರೋಗ/ಕೀಟ ಗುರುತಿಸುವಿಕೆ**: {disease}\n"
+                res += f"💊 **ಚಿಕಿತ್ಸಾ ವಿಧಾನ**: {treatment}\n"
+                res += f"💧 **ಕೀಟ-ನಿರ್ದಿಷ್ಟ ನೀರಾವರಿ ಸಲಹೆ**: {irrigation_impact}\n\n"
+            
+            res += f"🌱 **ಬೆಳೆ ಮಾರ್ಗಸೂಚಿಗಳು ಮತ್ತು ನೀರಾವರಿ ವಿವರಗಳು**:\n"
+            res += f"- **ಸಾಮಾನ್ಯ ನೀರಾವರಿ ಮಾರ್ಗಸೂಚಿ**: {irrigation_gen}\n"
+            res += f"- **ಸೂಕ್ತ ಮಣ್ಣಿನ ಪ್ರಕಾರ**: {soil_type}\n"
+            res += f"- **ಗೊಬ್ಬರ ಮತ್ತು ರಸಗೊಬ್ಬರ**: {fertilizer}\n"
+            res += f"- **ಬಿತ್ತನೆ ಸಮಯ**: {sowing}\n"
+            res += f"- **ಕೊಯ್ಲು ಸಮಯ**: {harvesting}\n"
+            res += f"- **ಶಿಫಾರಸು ಮಾಡಿದ ತಳಿಗಳು**: {varieties}\n"
+            res += f"- **ನಿರೀಕ್ಷಿತ ಇಳುವರಿ**: {expected_yield} ಕ್ವಿಂಟಾಲ್/ಹೆಕ್ಟೇರ್\n\n"
+            res += f"*(ಆಧಾರ ಸಂಖ್ಯೆ: {ref})*"
             return res
         elif lang == "te":
-            res = f"\U0001F33E **\u0C2A\u0C02\u0C1F \u0C38\u0C32\u0C39\u0C3E ({crop_name.capitalize()})**:\n"
-            if disease:
-                res += f"- **\u0C24\u0C46\u0C17\u0C41\u0C32\u0C41/\u0C15\u0C40\u0C1F\u0C15\u0C02**: {disease}\n- **\u0C28\u0C3F\u0C35\u0C3E\u0C30\u0C23 \u0C1A\u0C30\u0C4D\u0C2F\u0C32\u0C41**: {treatment}\n"
-            res += f"- **\u0C28\u0C40\u0C1F\u0C3F \u0C2F\u0C3E\u0C1C\u0C2E\u0C3E\u0C28\u0C4D\u0C2F\u0C02**: {irrigation}\n"
-            if varieties:
-                res += f"- **\u0C38\u0C3F\u0C2B\u0C3E\u0C30\u0C4D\u0C38\u0C41 \u0C1A\u0C47\u0C2F\u0C2C\u0C21\u0C3F\u0C28 \u0C30\u0C15\u0C3E\u0C32\u0C41**: {varieties}\n"
-            res += f"*(\u0C06\u0C27\u0C3E\u0C30\u0C02: {ref})*"
+            res = f"🌾 **పంట సలహా నివేదిక - {crop_name.upper()}**\n\n"
+            if disease and disease != "General Health / Diagnostic Pending" and disease != "Unknown/unlisted disease":
+                res += f"🔍 **తెగులు/కీటక గుర్తింపు**: {disease}\n"
+                res += f"💊 **నివారణ చర్యలు**: {treatment}\n"
+                res += f"💧 **కీటక-నిర్దిష్ట నీటి యాజమాన్యం**: {irrigation_impact}\n\n"
+            
+            res += f"🌱 **సాగు వివరాలు & నీటి యాజమాన్యం**:\n"
+            res += f"- **సాధారణ నీటి యాజమాన్యం**: {irrigation_gen}\n"
+            res += f"- **అనుకూలమైన నేల**: {soil_type}\n"
+            res += f"- **ఎరువుల యాజమాన్యం (NPK)**: {fertilizer}\n"
+            res += f"- **విత్తే సమయం**: {sowing}\n"
+            res += f"- **కోత సమయం**: {harvesting}\n"
+            res += f"- **సిఫార్సు చేసిన రకాలు**: {varieties}\n"
+            res += f"- **ఆశించిన దిగుబడి**: {expected_yield} క్వింటాల్/హెక్టార్\n\n"
+            res += f"*(ఆధారం: {ref})*"
             return res
         elif lang == "mr":
-            res = f"\U0001F33E **\u092a\u0940\u0915 \u0938\u0932\u094d\u0932\u093e ({crop_name.capitalize()})**:\n"
-            if disease:
-                res += f"- **\u0930\u094b\u0917/\u0915\u0940\u091f**: {disease}\n- **\u0909\u092a\u091a\u093e\u0930**: {treatment}\n"
-            res += f"- **\u092a\u093e\u0923\u094d\u092f\u093e\u091a\u0947 \u0928\u093f\u092f\u094b\u091c\u0928**: {irrigation}\n"
-            if varieties:
-                res += f"- **\u0936\u093f\u092b\u093e\u0930\u0938 \u0915\u0947\u0932\u0947\u0932\u094d\u092f\u093e \u091c\u093e\u0924\u0940**: {varieties}\n"
-            res += f"*(\u0938\u0902\u0926\u0930\u094d\u092d: {ref})*"
+            res = f"🌾 **पीक सल्ला अहवाल - {crop_name.upper()}**\n\n"
+            if disease and disease != "General Health / Diagnostic Pending" and disease != "Unknown/unlisted disease":
+                res += f"🔍 **रोग/कीट ओळख**: {disease}\n"
+                res += f"💊 **आयसीएआर उपचार सल्ला**: {treatment}\n"
+                res += f"💧 **कीट-विशिष्ट पाण्याचे नियोजन**: {irrigation_impact}\n\n"
+            
+            res += f"🌱 **पीक नियोजन आणि जल व्यवस्थापन**:\n"
+            res += f"- **पाण्याचे नियोजन**: {irrigation_gen}\n"
+            res += f"- **योग्य माती प्रकार**: {soil_type}\n"
+            res += f"- **खत व्यवस्थापन (NPK)**: {fertilizer}\n"
+            res += f"- **पेरणीचा कालावधी**: {sowing}\n"
+            res += f"- **काढणीचा कालावधी**: {harvesting}\n"
+            res += f"- **सुधारित जाती**: {varieties}\n"
+            res += f"- **संभाव्य उत्पन्न**: {expected_yield} क्विंटल/हेक्टर\n\n"
+            res += f"*(संदर्भ: {ref})*"
             return res
         else:
-            res = f"\U0001F33E **Crop Advisory ({crop_name.capitalize()})**:\n"
-            if disease:
-                res += f"- **Disease/Pest**: {disease}\n- **Treatment**: {treatment}\n"
-            res += f"- **Irrigation**: {irrigation}\n"
-            if varieties:
-                res += f"- **Recommended Varieties**: {varieties}\n"
-            res += f"*(Reference: {ref})*"
+            res = f"🌾 **Agricultural Crop Advisory Report - {crop_name.upper()}**\n\n"
+            if disease and disease != "General Health / Diagnostic Pending" and disease != "Unknown/unlisted disease":
+                res += f"🔍 **Disease/Pest Diagnosis**: {disease}\n"
+                res += f"💊 **ICAR Validated Treatment**: {treatment}\n"
+                res += f"💧 **Pest-Specific Irrigation Impact**: {irrigation_impact}\n\n"
+            
+            res += f"🌱 **Cultivation Details & General Irrigation Guide**:\n"
+            res += f"- **General Irrigation Guideline**: {irrigation_gen}\n"
+            res += f"- **Soil Recommendation**: {soil_type}\n"
+            res += f"- **NPK Fertilizer Dosage**: {fertilizer}\n"
+            res += f"- **Sowing Window**: {sowing}\n"
+            res += f"- **Harvesting Window**: {harvesting}\n"
+            res += f"- **ICAR Recommended Seed Varieties**: {varieties}\n"
+            res += f"- **Expected Yield Expectancy**: {expected_yield} qtl/ha\n\n"
+            res += f"*(Reference Code: {ref})*"
             return res
 
     def _format_scheme_response(self, data: dict, lang: str) -> str:
